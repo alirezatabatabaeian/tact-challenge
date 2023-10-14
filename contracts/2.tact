@@ -14,34 +14,33 @@ import "@stdlib/deploy";
 */
 
 message(0x44) Refund {
-  queryId: Int as uint64;
-  sender: Address;
+    queryId: Int as uint64;
+    sender: Address;
 }
 
 contract Task2 with Deployable {
-  admin: Address;
+    admin: Address;
+    init(admin: Address){
+        self.admin = admin;
+    }
 
-  init(admin: Address) {
-    self.admin = admin;
-  }
-  
-  receive(msg: Refund) {
-    require(sender() == self.admin, "not admin");
-    send(SendParameters{
-            to: msg.sender,
-            bounce: true,
-            value: context().value,
-            mode: SendPayGasSeparately
-    });
-  }
+    receive(msg: Refund){
+        require(sender() == self.admin, "not admin");
+        send(SendParameters{to: msg.sender,
+                bounce: true,
+                value: context().value,
+                mode: SendPayGasSeparately + SendIgnoreErrors
+            }
+        );
+    }
 
-  receive(msg: Slice) {
-    send(SendParameters{
-            to: self.admin,
-            bounce: true,
-            value: context().value,
-            body: beginCell().storeAddress(sender()).storeRef(msg.asCell()).endCell(),
-            mode: SendPayGasSeparately
-    });
-  }
+    receive(msg: Slice){
+        send(SendParameters{to: self.admin,
+                bounce: true,
+                value: context().value,
+                body: beginCell().storeAddress(sender()).storeRef(msg.asCell()).endCell(),
+                mode: SendPayGasSeparately + SendIgnoreErrors
+            }
+        );
+    }
 }
