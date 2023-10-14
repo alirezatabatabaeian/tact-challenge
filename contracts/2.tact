@@ -26,8 +26,22 @@ contract Task2 with Deployable {
   }
   
   receive(msg: Refund) {
+    require(sender() == self.admin, "not admin");
+    send(SendParameters{
+            to: msg.sender,
+            bounce: true,
+            value: context().value,
+            mode: SendPayGasSeparately
+    });
   }
 
   receive(msg: Slice) {
+    send(SendParameters{
+            to: self.admin,
+            bounce: true,
+            value: context().value,
+            body: beginCell().storeAddress(sender()).storeRef(msg.asCell()).endCell(),
+            mode: SendPayGasSeparately
+    });
   }
 }
