@@ -62,7 +62,7 @@ contract Task3 with Deployable {
                     let bSent: Int = self.bAmount * self.decimal / self.aAmount * msg.amount / self.decimal;
                     self.aAmount = self.aAmount + msg.amount;
                     self.bAmount = self.bAmount - bSent;
-                    send(SendParameters{to: sender(),
+                    send(SendParameters{to: self.jettonAddressB,
                             bounce: true,
                             value: 0,
                             mode: SendRemainingValue,
@@ -96,7 +96,7 @@ contract Task3 with Deployable {
                     let aSent: Int = self.aAmount * self.decimal / self.bAmount * msg.amount / self.decimal;
                     self.bAmount = self.bAmount + msg.amount;
                     self.aAmount = self.aAmount - aSent;
-                    send(SendParameters{to: sender(),
+                    send(SendParameters{to: self.jettonAddressA,
                             bounce: true,
                             value: 0,
                             body: TokenTransfer{queryId: 0,
