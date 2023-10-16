@@ -65,7 +65,7 @@ contract Task3 with Deployable {
                     send(SendParameters{to: sender(),
                             bounce: true,
                             value: 0,
-                            mode: SendPayGasSeparately,
+                            mode: SendRemainingValue,
                             body: TokenTransfer{queryId: 0,
                                 amount: bSent,
                                 destination: msg.from,
@@ -107,7 +107,7 @@ contract Task3 with Deployable {
                                 forwardTonAmount: ton("0.01"),
                                 forwardPayload: emptySlice()
                             }.toCell(),
-                            mode: SendPayGasSeparately
+                            mode: SendRemainingValue
                         }
                     );
                 } else {
