@@ -26,12 +26,7 @@ contract Task2 with Deployable {
 
     receive(msg: Refund){
         require(sender() == self.admin, "not admin");
-        send(SendParameters{to: msg.sender,
-                bounce: true,
-                value: 0,
-                mode: SendRemainingValue
-            }
-        );
+        send(SendParameters{to: msg.sender, bounce: true, value: 0, mode: SendRemainingValue});
     }
 
     receive(msg: Slice){
