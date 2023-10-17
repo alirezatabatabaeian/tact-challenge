@@ -65,6 +65,9 @@ contract Task4 with Deployable {
                     }.toCell()
                 }
             );
+            self.nft_address = null;
+            self.owner = null;
+            self.time = 0;
         }
     }
 
