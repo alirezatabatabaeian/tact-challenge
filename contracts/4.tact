@@ -65,7 +65,9 @@ contract Task4 with Deployable {
                     }.toCell()
                 }
             );
-            // todo: make the storage empty (maybe not necessary)
+            self.nft_address = newAddress(0, 0);
+            self.owner = newAddress(0, 0);
+            self.time = 0;
         }
     }
 
