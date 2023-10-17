@@ -1,5 +1,4 @@
 import "@stdlib/deploy";
-
 message(0x05138d91) OwnershipAssigned {
     queryId: Int as uint64;
     prevOwner: Address;
@@ -70,18 +69,24 @@ contract Task4 with Deployable {
         }
     }
 
+    // make sure about having nft (maybe not necessary)
     get fun time(): Int {
-        // todo: make sure about having nft (maybe not necessary)
         return self.time - now();
     }
 
     get fun nft(): Address? {
-        // todo: return null
-        return self.nft_address;
+        if (self.nft_address == newAddress(0, 0)) {
+            return null;
+        } else {
+            return self.nft_address;
+        }
     }
 
     get fun owner(): Address? {
-        // todo: return null
-        return self.owner;
+        if (self.nft_address == newAddress(0, 0)) {
+            return null;
+        } else {
+            return self.owner;
+        }
     }
 }
