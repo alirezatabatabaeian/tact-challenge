@@ -52,22 +52,24 @@ contract Task4 with Deployable {
         if (now() < self.time) {
             self.reply("NFT is still locked".asComment());
         } else {
-            send(SendParameters{to: self.nft_address!!,
-                    bounce: true,
-                    value: 0,
-                    mode: SendRemainingBalance + SendPayGasSeparately + SendIgnoreErrors + SendDestroyIfZero,
-                    body: Transfer{queryId: 0,
-                        newOwner: sender(),
-                        responseDestination: newAddress(0, 0),
-                        customPayload: null,
-                        forwardAmount: 0,
-                        forwardPayload: emptySlice()
-                    }.toCell()
-                }
-            );
-            self.nft_address = null;
-            self.owner = null;
-            self.time = 0;
+            if (self.nft_address != null) {
+                send(SendParameters{to: self.nft_address!!,
+                        bounce: true,
+                        value: 0,
+                        mode: SendRemainingBalance + SendPayGasSeparately + SendIgnoreErrors + SendDestroyIfZero,
+                        body: Transfer{queryId: 0,
+                            newOwner: sender(),
+                            responseDestination: newAddress(0, 0),
+                            customPayload: null,
+                            forwardAmount: 0,
+                            forwardPayload: emptySlice()
+                        }.toCell()
+                    }
+                );
+                self.nft_address = null;
+                self.owner = null;
+                self.time = 0;
+            }
         }
     }
 
