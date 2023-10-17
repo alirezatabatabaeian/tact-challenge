@@ -33,12 +33,12 @@ contract Task4 with Deployable {
         if (self.owner == null) {
             self.nft_address = sender();
             self.owner = msg.prevOwner;
-            self.time = now() + msg.forwardPayload.preloadUint(32);
+            self.time = now() + msg.forwardPayload.loadUint(32);
         } else {
             send(SendParameters{to: sender(),
                     value: 0,
                     mode: SendRemainingValue,
-                    body: Transfer{queryId: 0,
+                    body: Transfer{queryId: msg.queryId,
                         newOwner: msg.prevOwner,
                         responseDestination: myAddress(),
                         customPayload: null,
@@ -66,17 +66,17 @@ contract Task4 with Deployable {
                         value: 0,
                         mode: SendRemainingBalance,
                         body: Transfer{queryId: 0,
-                            newOwner: sender(),
-                            responseDestination: myAddress(),
+                            newOwner: self.owner!!,
+                            responseDestination: self.owner!!,
                             customPayload: null,
                             forwardAmount: 0,
                             forwardPayload: emptySlice()
                         }.toCell()
                     }
                 );
-                // self.nft_address = null;
-                // self.owner = null;
-                // self.time = 0;
+                self.nft_address = null;
+                self.owner = null;
+                self.time = 0;
             }
         }
     }
