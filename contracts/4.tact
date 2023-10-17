@@ -37,7 +37,7 @@ contract Task4 with Deployable {
         } else {
             self.reply(Transfer{queryId: 0,
                     newOwner: msg.prevOwner,
-                    responseDestination: myAddress(),
+                    responseDestination: msg.prevOwner,
                     customPayload: null,
                     forwardAmount: ton("0.01"),
                     forwardPayload: emptySlice()
