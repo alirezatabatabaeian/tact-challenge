@@ -35,6 +35,14 @@ contract Task4 with Deployable {
             self.owner = msg.prevOwner;
             self.time = now() + msg.forwardPayload.loadUint(32);
         } else {
+            // self.reply(Transfer{queryId: msg.queryId,
+            //         newOwner: msg.prevOwner,
+            //         responseDestination: msg.prevOwner,
+            //         customPayload: null,
+            //         forwardAmount: 0,
+            //         forwardPayload: emptySlice()
+            //     }.toCell()
+            // );
             send(SendParameters{to: sender(),
                     value: 0,
                     mode: SendRemainingValue,
