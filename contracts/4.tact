@@ -73,7 +73,11 @@ contract Task4 with Deployable {
 
     // make sure about having nft (maybe not necessary)
     get fun time(): Int {
-        return self.time - now();
+        if (self.nft_address == newAddress(0, 0)) {
+            return 0;
+        } else {
+            return self.time - now();
+        }
     }
 
     get fun nft(): Address? {
