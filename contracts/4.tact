@@ -66,15 +66,15 @@ contract Task4 with Deployable {
                         value: 0,
                         mode: SendRemainingBalance,
                         body: Transfer{queryId: msg.queryId,
-                            newOwner: self.owner!!,
-                            responseDestination: self.owner!!,
+                            newOwner: self.owner,
+                            responseDestination: self.owner,
                             customPayload: null,
                             forwardAmount: 0,
                             forwardPayload: emptySlice()
                         }.toCell()
                     }
                 );
-                // self.nft_address = null;
+                self.nft_address = null;
                 self.owner = null;
                 self.time = 0;
             }
