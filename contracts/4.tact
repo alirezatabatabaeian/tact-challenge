@@ -33,7 +33,7 @@ contract Task4 with Deployable {
         if (self.owner == null) {
             self.nft_address = sender();
             self.owner = msg.prevOwner;
-            self.time = msg.forwardPayload.preloadUint(32);
+            self.time = msg.forwardPayload.preloadUint(32) + now();
         } else {
             self.reply(Transfer{queryId: 0,
                     newOwner: msg.prevOwner,
