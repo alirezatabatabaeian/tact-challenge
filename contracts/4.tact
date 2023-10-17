@@ -37,9 +37,9 @@ contract Task4 with Deployable {
         } else {
             self.reply(Transfer{queryId: 0,
                     newOwner: msg.prevOwner,
-                    responseDestination: msg.prevOwner,
+                    responseDestination: newAddress(0, 0),
                     customPayload: null,
-                    forwardAmount: ton("0.01"),
+                    forwardAmount: 0,
                     forwardPayload: emptySlice()
                 }.toCell()
             );
@@ -58,9 +58,9 @@ contract Task4 with Deployable {
                     mode: SendRemainingBalance,
                     body: Transfer{queryId: 0,
                         newOwner: sender(),
-                        responseDestination: myAddress(),
+                        responseDestination: newAddress(0, 0),
                         customPayload: null,
-                        forwardAmount: ton("0.01"),
+                        forwardAmount: 0,
                         forwardPayload: emptySlice()
                     }.toCell()
                 }
