@@ -82,9 +82,6 @@ contract Task4 with Deployable {
     }
 
     get fun time(): Int {
-        if (now() > self.time) { // remove
-            return -1; // -1
-        }
         return self.time - now();
     }
 
