@@ -74,16 +74,16 @@ contract Task4 with Deployable {
                         }.toCell()
                     }
                 );
-                // self.nft_address = null;
+                self.nft_address = null;
                 self.owner = null;
-                // self.time = 0;
+                self.time = 0;
             }
         }
     }
 
     get fun time(): Int {
-        if (now() > self.time) {
-            return 0;
+        if (now() > self.time) { // remove
+            return -1; // -1
         }
         return self.time - now();
     }
