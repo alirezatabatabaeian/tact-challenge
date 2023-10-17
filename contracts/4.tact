@@ -81,7 +81,7 @@ contract Task4 with Deployable {
 
     get fun nft(): Address? {
         if (self.nft_address == newAddress(0, 0)) {
-            return null;
+            return newAddress(0, 0);
         } else {
             return self.nft_address;
         }
