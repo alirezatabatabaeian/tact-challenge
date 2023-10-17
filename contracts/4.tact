@@ -19,18 +19,18 @@ message NftWithdrawal {
 
 contract Task4 with Deployable {
     seed: Int as uint128;
-    nft_address: Address;
-    owner: Address;
+    nft_address: Address?;
+    owner: Address?;
     time: Int as uint32;
     init(seed: Int){
         self.seed = seed;
-        self.nft_address = newAddress(0, 0);
-        self.owner = newAddress(0, 0);
+        self.nft_address = null;
+        self.owner = null;
         self.time = 0;
     }
 
     receive(msg: OwnershipAssigned){
-        if (self.owner == newAddress(0, 0)) {
+        if (self.owner == null) {
             self.nft_address = sender();
             self.owner = msg.prevOwner;
             self.time = msg.forwardPayload.preloadUint(32);
@@ -52,7 +52,7 @@ contract Task4 with Deployable {
         if (now() < self.time) {
             self.reply("NFT is still locked".asComment());
         } else {
-            send(SendParameters{to: self.nft_address,
+            send(SendParameters{to: self.nft_address!!,
                     bounce: true,
                     value: 0,
                     mode: SendRemainingValue,
@@ -65,33 +65,21 @@ contract Task4 with Deployable {
                     }.toCell()
                 }
             );
-            self.nft_address = newAddress(0, 0);
-            self.owner = newAddress(0, 0);
+            self.nft_address = null;
+            self.owner = null;
             self.time = 0;
         }
     }
 
     get fun time(): Int {
-        if (self.nft_address == newAddress(0, 0)) {
-            return 0;
-        } else {
-            return self.time - now();
-        }
+        return self.time - now();
     }
 
     get fun nft(): Address? {
-        if (self.nft_address == newAddress(0, 0)) {
-            return null;
-        } else {
-            return self.nft_address;
-        }
+        return self.nft_address;
     }
 
     get fun owner(): Address? {
-        if (self.nft_address == newAddress(0, 0)) {
-            return null;
-        } else {
-            return self.owner;
-        }
+        return self.owner;
     }
 }
