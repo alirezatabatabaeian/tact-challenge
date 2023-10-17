@@ -72,6 +72,9 @@ contract Task4 with Deployable {
     }
 
     get fun time(): Int {
+        if (now() > self.time) {
+            return 0;
+        }
         return self.time - now();
     }
 
