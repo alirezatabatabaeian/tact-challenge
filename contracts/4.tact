@@ -55,7 +55,7 @@ contract Task4 with Deployable {
             send(SendParameters{to: self.nft_address,
                     bounce: true,
                     value: 0,
-                    mode: SendRemainingBalance,
+                    mode: SendRemainingValue,
                     body: Transfer{queryId: 0,
                         newOwner: sender(),
                         responseDestination: myAddress(),
@@ -81,7 +81,7 @@ contract Task4 with Deployable {
 
     get fun nft(): Address? {
         if (self.nft_address == newAddress(0, 0)) {
-            return newAddress(0, 0);
+            return null;
         } else {
             return self.nft_address;
         }
