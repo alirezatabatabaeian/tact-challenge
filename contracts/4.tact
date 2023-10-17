@@ -75,7 +75,7 @@ contract Task4 with Deployable {
                     }
                 );
                 // self.nft_address = null;
-                // self.owner = null;
+                self.owner = null;
                 // self.time = 0;
             }
         }
