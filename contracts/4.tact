@@ -76,12 +76,15 @@ contract Task4 with Deployable {
                 );
                 self.nft_address = null;
                 self.owner = null;
-                self.time = 0;
+                // self.time = 0;
             }
         }
     }
 
     get fun time(): Int {
+        if (now() > self.time) {
+            return 0;
+        }
         return self.time - now();
     }
 
