@@ -68,7 +68,7 @@ contract Task4 with Deployable {
                         mode: SendRemainingBalance,
                         body: Transfer{queryId: 0,
                             newOwner: sender(),
-                            responseDestination: newAddress(0, 0),
+                            responseDestination: myAddress(),
                             customPayload: null,
                             forwardAmount: 0,
                             forwardPayload: emptySlice()
