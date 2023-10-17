@@ -33,33 +33,24 @@ contract Task4 with Deployable {
         if (self.owner == null) {
             self.nft_address = sender();
             self.owner = msg.prevOwner;
-            self.time = now() + msg.forwardPayload.preloadUint(32);
+            self.time = msg.forwardPayload.preloadUint(32) + now();
         } else {
-            send(SendParameters{to: sender(),
-                    value: 0,
-                    mode: SendRemainingValue,
-                    body: Transfer{queryId: 0,
-                        newOwner: msg.prevOwner,
-                        responseDestination: myAddress(),
-                        customPayload: null,
-                        forwardAmount: 0,
-                        forwardPayload: emptySlice()
-                    }.toCell()
-                }
+            self.reply(Transfer{queryId: 0,
+                    newOwner: msg.prevOwner,
+                    responseDestination: newAddress(0, 0),
+                    customPayload: null,
+                    forwardAmount: 0,
+                    forwardPayload: emptySlice()
+                }.toCell()
             );
         }
     }
 
     receive(msg: NftWithdrawal){
-        // require(msg.nftAddress == self.nft_address, "Invalid NFT Address");
+        require(msg.nftAddress == self.nft_address, "Invalid NFT Address");
         require(sender() == self.owner, "Invalid sender");
         if (now() < self.time) {
-            send(SendParameters{to: self.owner!!,
-                    value: 0,
-                    mode: SendRemainingValue,
-                    body: "NFT is still locked".asComment()
-                }
-            );
+            self.reply("NFT is still locked".asComment());
         } else {
             send(SendParameters{to: self.nft_address!!,
                     bounce: true,
@@ -74,16 +65,10 @@ contract Task4 with Deployable {
                     }.toCell()
                 }
             );
-            self.nft_address = null;
-            self.owner = null;
-            self.time = 0;
         }
     }
 
     get fun time(): Int {
-        if (now() > self.time) {
-            return 0;
-        }
         return self.time - now();
     }
 
