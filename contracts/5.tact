@@ -45,7 +45,7 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            nativeReserve(context().value, 1);
+            // nativeReserve(context().value, 1);
             send(SendParameters{
             to: sender(),
             value: 0,
@@ -76,7 +76,7 @@ contract Task5 with Deployable {
           });
           }
           else{
-            nativeReserve(ton("0.1"), 1);
+            // nativeReserve(ton("0.1"), 1);
             send(SendParameters{
             to: self.nfts.get(random_index)!!,
             value: 0,
@@ -128,7 +128,7 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int {
-    return myBalance();
+    return myBalance() - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
