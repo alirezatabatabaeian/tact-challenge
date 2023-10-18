@@ -63,20 +63,18 @@ contract Task5 with Deployable {
         else{
           let random_index: Int = random(0, self.totalNftsHeld);
           if(random_index == self.totalNftsHeld){
-            if(context().value > ton("0.1")){
-                send(SendParameters{
-                    to: sender(),
-                    value: context().value - ton("2"),
-                    mode: SendPayGasSeparately,
-                    body: Transfer{queryId: msg.queryId,
-                        newOwner: msg.prevOwner,
-                        responseDestination: msg.prevOwner,
-                        customPayload: null,
-                        forwardAmount: 0,
-                        forwardPayload: emptySlice()
-                    }.toCell()
-                  });
-            }  
+            send(SendParameters{
+                to: sender(),
+                value: context().value - ton("2"),
+                mode: SendPayGasSeparately,
+                body: Transfer{queryId: msg.queryId,
+                    newOwner: msg.prevOwner,
+                    responseDestination: msg.prevOwner,
+                    customPayload: null,
+                    forwardAmount: 0,
+                    forwardPayload: emptySlice()
+                }.toCell()
+              });
           }
           else{
             send(SendParameters{ 
@@ -99,13 +97,11 @@ contract Task5 with Deployable {
 
   receive(msg: AdminWithdrawalProfit) {
     require(self.owner == sender(), "Insufficient privelegies");
-    if(myBalance() > ton("0.1")){
-      send(SendParameters{to: sender(),
-                        bounce: true,
-                        value: myBalance() - ton("0.1"),
-                        mode: SendRemainingValue,
-                        body: AdminFetchProfit{queryId: msg.queryId}.toCell()});
-    }
+    send(SendParameters{to: sender(),
+                      bounce: true,
+                      value: myBalance() - ton("0.1"),
+                      mode: SendRemainingValue,
+                      body: AdminFetchProfit{queryId: msg.queryId}.toCell()});
 
   }
 
@@ -135,7 +131,12 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int {
-    return myBalance() - ton("0.1");
+    if(myBalance() <= ton("0.1")) {
+      return 0;
+    }
+    else{
+      return myBalance() - ton("0.1");
+    }
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
