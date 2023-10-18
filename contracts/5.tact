@@ -45,19 +45,21 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            nativeReserve(context().value, 1);
-            send(SendParameters{
-            to: sender(),
-            value: 0,
-            mode: SendRemainingValue,
-            body: Transfer{queryId: msg.queryId,
-                newOwner: msg.prevOwner,
-                responseDestination: msg.prevOwner,
-                customPayload: null,
-                forwardAmount: 0,
-                forwardPayload: emptySlice()
-            }.toCell()
-          });
+            // nativeReserve(context().value, 1);
+            if(context().value > 0.1){
+              send(SendParameters{
+              to: sender(),
+              value: 0,
+              mode: SendRemainingValue,
+              body: Transfer{queryId: msg.queryId,
+                  newOwner: msg.prevOwner,
+                  responseDestination: msg.prevOwner,
+                  customPayload: null,
+                  forwardAmount: 0,
+                  forwardPayload: emptySlice()
+                }.toCell()
+              });
+            }
         }
         else{
           let random_index: Int = random(0, self.totalNftsHeld);
