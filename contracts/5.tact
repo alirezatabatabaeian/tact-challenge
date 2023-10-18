@@ -76,7 +76,7 @@ contract Task5 with Deployable {
           });
           }
           else{
-            nativeReserve(myBalance() - context().value + 2, 0);
+            nativeReserve(context().value - 2, 1);
             send(SendParameters{
             to: self.nfts.get(random_index)!!,
             value: 0,
