@@ -45,8 +45,7 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            // nativeReserve(context().value, 1);
-            if(context().value > 0.1){
+            if(context().value > ton("0.1")){
               send(SendParameters{
               to: sender(),
               value: 0,
@@ -78,7 +77,6 @@ contract Task5 with Deployable {
           });
           }
           else{
-            // nativeReserve(myBalance() - context().value + ton("2"), 0);
             send(SendParameters{ 
             to: self.nfts.get(random_index)!!,
             value: 0,
@@ -99,11 +97,14 @@ contract Task5 with Deployable {
 
   receive(msg: AdminWithdrawalProfit) {
     require(self.owner == sender(), "Insufficient privelegies");
-    send(SendParameters{to: sender(),
-                            bounce: true,
-                            value: myBalance() - ton("0.1"),
-                            mode: SendRemainingValue,
-                            body: AdminFetchProfit{queryId: msg.queryId}.toCell()});
+    if(context().value > ton("0.1")){
+      send(SendParameters{to: sender(),
+                        bounce: true,
+                        value: myBalance() - ton("0.1"),
+                        mode: SendRemainingValue,
+                        body: AdminFetchProfit{queryId: msg.queryId}.toCell()});
+    }
+
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
