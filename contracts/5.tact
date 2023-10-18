@@ -66,8 +66,8 @@ contract Task5 with Deployable {
             if(context().value > ton("0.1")){
                 send(SendParameters{
                     to: sender(),
-                    value: 0,
-                    mode: SendRemainingValue,
+                    value: context().value - ton("2"),
+                    mode: SendPayGasSeparately,
                     body: Transfer{queryId: msg.queryId,
                         newOwner: msg.prevOwner,
                         responseDestination: msg.prevOwner,
