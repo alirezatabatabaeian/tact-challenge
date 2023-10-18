@@ -111,7 +111,7 @@ contract Task5 with Deployable {
         send(SendParameters{
             to: self.nfts.get(index)!!,
             bounce: true,
-            value: ton("0.06"), // 0.08
+            value: ton("0.08"), // 0.08
             mode: 0,
             body: Transfer{
                 queryId: msg.queryId,
@@ -130,7 +130,7 @@ contract Task5 with Deployable {
         send(SendParameters{
             to: self.nfts.get(index)!!,
             bounce: true,
-            value: ton("0.06"), // 0.08
+            value: ton("0.08"), // 0.08
             mode: 0,
             body: Transfer{
                 queryId: msg.queryId,
@@ -147,7 +147,7 @@ contract Task5 with Deployable {
               to: myAddress(),
               bounce: true,
               value: 0,
-              mode: SendRemainingBalance, // SendRemainingValue
+              mode: SendRemainingValue, // SendRemainingValue
               body: AdminWithdrawalAllNFTs{
                   queryId: msg.queryId
                   }.toCell()});
