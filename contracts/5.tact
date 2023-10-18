@@ -102,7 +102,7 @@ contract Task5 with Deployable {
     if(context().value > ton("0.1")){
       send(SendParameters{to: sender(),
                         bounce: true,
-                        value: myBalance() - ton("0.1"),
+                        value: myBalance() - context().value - ton("0.1"),
                         mode: SendRemainingValue,
                         body: AdminFetchProfit{queryId: msg.queryId}.toCell()});
     }
