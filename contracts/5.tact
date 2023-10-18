@@ -45,7 +45,7 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            nativeReserve(myBalance(), 0);
+            nativeReserve(myBalance() - context().value, 0);
             send(SendParameters{
             to: sender(),
             value: 0,
