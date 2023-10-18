@@ -45,7 +45,7 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            if(context().value >= ton("0.01")){
+            if(context().value >= ton("0.1")){
               send(SendParameters{
               to: sender(),
               value: 0,
@@ -107,26 +107,24 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalAllNFTs) {
     require(context().value >= ton("1") + self.totalNftsHeld * ton("0.08"), "Insufficent funds");
     require(self.owner == sender(), "Invalid sender");
-    if(self.totalNftsHeld != 0){
-      let index: Int = 0;
-      repeat(self.totalNftsHeld){
-          send(SendParameters{
-              to: self.nfts.get(index)!!,
-              bounce: true,
-              value: ton("0.08"),
-              mode: 0,
-              body: Transfer{
-                  queryId: msg.queryId,
-                  newOwner: self.owner,
-                  responseDestination: self.owner,
-                  customPayload: null,
-                  forwardAmount: 0,
-                  forwardPayload: emptySlice()
-                  }.toCell()});
-          index = index + 1;
-      }
-      self.nfts = emptyMap();
+    let index: Int = 0;
+    repeat(self.totalNftsHeld){
+        send(SendParameters{
+            to: self.nfts.get(index)!!,
+            bounce: true,
+            value: ton("0.08"),
+            mode: 0,
+            body: Transfer{
+                queryId: msg.queryId,
+                newOwner: self.owner,
+                responseDestination: self.owner,
+                customPayload: null,
+                forwardAmount: 0,
+                forwardPayload: emptySlice()
+                }.toCell()});
+        index = index + 1;
     }
+    self.nfts = emptyMap();
   }
 
   get fun profit(): Int {
