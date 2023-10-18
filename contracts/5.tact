@@ -1,11 +1,4 @@
 import "@stdlib/deploy";
-
-/*
-  * OwnershipAssigned 
-   - if value of TON attached is less than 2.1 TON then stop execution and return NFT back,
-     but only in case that TON attached is enough to process refund without losing TONs on the SC's balance
-*/
-
 message AdminWithdrawalProfit {
   queryId: Int as uint64;
 }
