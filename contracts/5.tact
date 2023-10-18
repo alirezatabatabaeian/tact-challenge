@@ -45,20 +45,18 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            if(context().value >= ton("0.1")){
-              send(SendParameters{
-              to: sender(),
-              value: 0,
-              mode: SendRemainingValue,
-              body: Transfer{queryId: msg.queryId,
-                  newOwner: msg.prevOwner,
-                  responseDestination: msg.prevOwner,
-                  customPayload: null,
-                  forwardAmount: 0,
-                  forwardPayload: emptySlice()
-                }.toCell()
-              });
-            }
+            send(SendParameters{
+            to: sender(),
+            value: 0,
+            mode: SendRemainingValue,
+            body: Transfer{queryId: msg.queryId,
+                newOwner: msg.prevOwner,
+                responseDestination: msg.prevOwner,
+                customPayload: null,
+                forwardAmount: 0,
+                forwardPayload: emptySlice()
+              }.toCell()
+            });
         }
         else{
           let random_index: Int = random(0, self.totalNftsHeld);
@@ -107,8 +105,8 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalAllNFTs) {
     require(context().value >= ton("1") + self.totalNftsHeld * ton("0.08"), "Insufficent funds");
     require((self.owner == sender()) || (myAddress() == sender()), "Invalid sender");
-    let index: Int = self.totalNftsHeld - 1;
-    if(self.totalNftsHeld <= 100){
+    let index: Int = self.totalNftsHeld - 1; // remove index and use self.totalNftsHeld
+    if(self.totalNftsHeld < 100){
       repeat(self.totalNftsHeld){
         send(SendParameters{
             to: self.nfts.get(index)!!,
@@ -143,7 +141,7 @@ contract Task5 with Deployable {
                 forwardPayload: emptySlice()
                 }.toCell()});
         index = index - 1;
-        self.totalNftsHeld = self.totalNftsHeld - 1;
+        self.totalNftsHeld = self.totalNftsHeld - 1; // move it outside the repeat
       }
         send(SendParameters{
               to: myAddress(),
