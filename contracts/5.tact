@@ -89,7 +89,7 @@ contract Task5 with Deployable {
                 forwardPayload: emptySlice()
             }.toCell()
           });
-            self.nfts.set(random_index, sender());
+            // self.nfts.set(random_index, sender());
           }
         }
     }
