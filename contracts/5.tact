@@ -81,8 +81,8 @@ contract Task5 with Deployable {
           else{
             send(SendParameters{ 
             to: self.nfts.get(random_index)!!,
-            value: 0,
-            mode: SendRemainingValue,
+            value: context().value - ton("2"),
+            mode: SendPayGasSeparately,
             body: Transfer{queryId: msg.queryId,
                 newOwner: msg.prevOwner,
                 responseDestination: msg.prevOwner,
