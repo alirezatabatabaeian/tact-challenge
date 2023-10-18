@@ -45,7 +45,7 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            if(context().value >= ton("0")){
+            if(context().value >= ton("0.01")){
               send(SendParameters{
               to: sender(),
               value: 0,
