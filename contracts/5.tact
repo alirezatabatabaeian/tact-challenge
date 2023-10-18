@@ -60,7 +60,6 @@ contract Task5 with Deployable {
           });
         }
         else{
-          nativeReserve(ton("0.1"), 1);
           let random_index: Int = random(0, self.totalNftsHeld);
           if(random_index == self.totalNftsHeld){
             send(SendParameters{
@@ -77,6 +76,7 @@ contract Task5 with Deployable {
           });
           }
           else{
+            nativeReserve(ton("0.1"), 1);
             send(SendParameters{
             to: self.nfts.get(random_index)!!,
             value: 0,
@@ -89,7 +89,7 @@ contract Task5 with Deployable {
                 forwardPayload: emptySlice()
             }.toCell()
           });
-            // self.nfts.set(random_index, sender());
+            self.nfts.set(random_index, sender());
           }
         }
     }
