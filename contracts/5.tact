@@ -45,7 +45,7 @@ contract Task5 with Deployable {
     }
     else{
         if(context().value < ton("2.1")){
-            nativeReserve(context().value, 1);
+            // nativeReserve(context().value, 1);
             send(SendParameters{
             to: sender(),
             value: 0,
@@ -76,7 +76,7 @@ contract Task5 with Deployable {
           });
           }
           else{
-            nativeReserve(myBalance() + ton("2"), 0);
+            // nativeReserve(myBalance() - context().value + ton("2"), 0);
             send(SendParameters{ 
             to: self.nfts.get(random_index)!!,
             value: 0,
