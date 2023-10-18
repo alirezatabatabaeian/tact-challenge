@@ -106,7 +106,7 @@ contract Task5 with Deployable {
     require(context().value >= ton("1") + self.totalNftsHeld * ton("0.08"), "Insufficent funds");
     require((self.owner == sender()) || (myAddress() == sender()), "Invalid sender");
     let index: Int = self.totalNftsHeld - 1; // remove index and use self.totalNftsHeld
-    if(self.totalNftsHeld < 100){
+    if(self.totalNftsHeld <= 100){
       repeat(self.totalNftsHeld){
         send(SendParameters{
             to: self.nfts.get(index)!!,
@@ -147,7 +147,7 @@ contract Task5 with Deployable {
               to: myAddress(),
               bounce: true,
               value: 0,
-              mode: SendRemainingValue,
+              mode: SendRemainingBalance, // SendRemainingBalance
               body: AdminWithdrawalAllNFTs{
                   queryId: msg.queryId
                   }.toCell()});
