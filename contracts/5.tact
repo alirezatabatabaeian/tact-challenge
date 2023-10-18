@@ -99,10 +99,10 @@ contract Task5 with Deployable {
 
   receive(msg: AdminWithdrawalProfit) {
     require(self.owner == sender(), "Insufficient privelegies");
-    if(context().value > ton("0.1")){
+    if(myBalance() > ton("0.1")){
       send(SendParameters{to: sender(),
                         bounce: true,
-                        value: myBalance() - context().value - ton("0.1"),
+                        value: myBalance() - ton("0.1"),
                         mode: SendRemainingValue,
                         body: AdminFetchProfit{queryId: msg.queryId}.toCell()});
     }
