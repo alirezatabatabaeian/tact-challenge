@@ -63,18 +63,20 @@ contract Task5 with Deployable {
         else{
           let random_index: Int = random(0, self.totalNftsHeld);
           if(random_index == self.totalNftsHeld){
-            send(SendParameters{
-            to: sender(),
-            value: 0,
-            mode: SendRemainingValue,
-            body: Transfer{queryId: msg.queryId,
-                newOwner: msg.prevOwner,
-                responseDestination: msg.prevOwner,
-                customPayload: null,
-                forwardAmount: 0,
-                forwardPayload: emptySlice()
-            }.toCell()
-          });
+            if(context().value > ton("0.1")){
+                send(SendParameters{
+                    to: sender(),
+                    value: 0,
+                    mode: SendRemainingValue,
+                    body: Transfer{queryId: msg.queryId,
+                        newOwner: msg.prevOwner,
+                        responseDestination: msg.prevOwner,
+                        customPayload: null,
+                        forwardAmount: 0,
+                        forwardPayload: emptySlice()
+                    }.toCell()
+                  });
+            }  
           }
           else{
             send(SendParameters{ 
