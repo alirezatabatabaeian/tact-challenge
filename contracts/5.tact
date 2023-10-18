@@ -113,7 +113,7 @@ contract Task5 with Deployable {
             to: self.nfts.get(index)!!,
             bounce: true,
             value: ton("0.08"),
-            mode: 0,
+            mode: SendPayGasSeparately,
             body: Transfer{
                 queryId: msg.queryId,
                 newOwner: self.owner,
