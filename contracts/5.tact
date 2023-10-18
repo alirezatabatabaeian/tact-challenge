@@ -127,15 +127,6 @@ contract Task5 with Deployable {
       }
       self.nfts = emptyMap();
     }
-    else{
-      return;
-      // send(SendParameters{
-      //       to: sender(),
-      //       bounce: true,
-      //       value: 0,
-      //       mode: SendRemainingValue
-      //   });
-    }
   }
 
   get fun profit(): Int {
