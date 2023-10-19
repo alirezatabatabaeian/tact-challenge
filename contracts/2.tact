@@ -1,5 +1,4 @@
 import "@stdlib/deploy";
-
 /*
   TASK 2 - Proxy 
   Create a contract that forwards all received TONs
@@ -25,17 +24,22 @@ contract Task2 with Deployable {
     }
 
     receive(msg: Refund){
-        require(sender() == self.admin, "not admin");
+        require(sender() == self.admin, "!");
+        // nativeSendMessage(beginCell().storeUint(0x18, 6).storeAddress(msg.sender).storeCoins(0).storeUint(0,
+        //         1
+        //     ).storeUint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1).endCell(),
+        //     64
+        // );
         send(SendParameters{to: msg.sender, bounce: true, value: 0, mode: SendRemainingValue});
     }
 
     receive(msg: Slice){
-        send(SendParameters{to: self.admin,
-                bounce: true,
-                value: 0,
-                body: beginCell().storeAddress(sender()).storeRef(msg.asCell()).endCell(),
-                mode: SendRemainingValue
-            }
+        nativeSendMessage(beginCell().storeUint(0x18, 6).storeAddress(self.admin).storeCoins(0).storeUint(0,
+                1
+            ).storeUint(1, 1 + 4 + 4 + 64 + 32 + 1 + 1).storeRef(beginCell().storeAddress(sender()
+                ).storeRef(msg.asCell()).endCell()
+            ).endCell(),
+            64
         );
     }
 }
