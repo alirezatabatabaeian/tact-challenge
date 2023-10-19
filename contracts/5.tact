@@ -142,7 +142,6 @@ contract Task5 with Deployable {
                 }.toCell()});
         self.totalNftsHeld = self.totalNftsHeld - 1;
       }
-      self.totalNftsHeld = self.totalNftsHeld - 100;
         send(SendParameters{
               to: myAddress(),
               bounce: true,
