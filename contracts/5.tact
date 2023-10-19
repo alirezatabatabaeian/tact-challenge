@@ -105,11 +105,11 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalAllNFTs) {
     require(context().value >= ton("1") + self.totalNftsHeld * ton("0.08"), "Insufficent funds");
     require((self.owner == sender()) || (myAddress() == sender()), "Invalid sender");
-    let index: Int = self.totalNftsHeld - 1; // remove index and use self.totalNftsHeld
+    // let index: Int = self.totalNftsHeld - 1; // remove index and use self.totalNftsHeld
     if(self.totalNftsHeld <= 100){
       repeat(self.totalNftsHeld){
         send(SendParameters{
-            to: self.nfts.get(index)!!,
+            to: self.nfts.get(self.totalNftsHeld - 1)!!,
             bounce: true,
             value: ton("0.08"),
             mode: 0,
@@ -121,14 +121,14 @@ contract Task5 with Deployable {
                 forwardAmount: 0,
                 forwardPayload: emptySlice()
                 }.toCell()});
-        index = index - 1;
+        self.totalNftsHeld = self.totalNftsHeld - 1;
       }
       self.nfts = emptyMap();
     }
     else{
       repeat(100){
         send(SendParameters{
-            to: self.nfts.get(index)!!,
+            to: self.nfts.get(self.totalNftsHeld - 1)!!,
             bounce: true,
             value: ton("0.08"),
             mode: 0,
@@ -140,9 +140,9 @@ contract Task5 with Deployable {
                 forwardAmount: 0,
                 forwardPayload: emptySlice()
                 }.toCell()});
-        index = index - 1;
-        self.totalNftsHeld = self.totalNftsHeld - 1; // move it outside the repeat
+        self.totalNftsHeld = self.totalNftsHeld - 1;
       }
+      self.totalNftsHeld = self.totalNftsHeld - 100;
         send(SendParameters{
               to: myAddress(),
               bounce: true,
