@@ -24,7 +24,7 @@ contract Task2 with Deployable {
     }
 
     receive(msg: Refund){
-        require(sender() == self.admin, "!");
+        require(sender() == self.admin, "not admin");
         // nativeSendMessage(beginCell().storeUint(0x18, 6).storeAddress(msg.sender).storeCoins(0).storeUint(0,
         //         1
         //     ).storeUint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1).endCell(),
